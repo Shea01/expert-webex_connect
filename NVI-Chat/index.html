@@ -86,38 +86,6 @@
             background-color: #d1fae5;
             border-color: #10b981;
         }
-        
-        /* ============================================
-           CHAT WIDGET REPOSITIONING CSS
-           Added to move widget higher to avoid favorites button
-           Position: Line 97-107 in the style section
-           ============================================ */
-        
-        /* Move chat widget higher to avoid favorites button overlap */
-        .icw-widget,
-        #divicw iframe,
-        iframe[src*="imi.chat"],
-        iframe[title*="chat"],
-        iframe[title*="Chat"] {
-            bottom: 80px !important;  /* Moved up from default 20px to 80px */
-            right: 20px !important;   /* Keeping same horizontal position */
-        }
-        
-        /* Also adjust the TLS alert frame if it appears */
-        #tls_al_frm {
-            bottom: 72px !important;  /* Adjusted to align with chat widget */
-        }
-        
-        /* Mobile responsive adjustment - prevent full screen takeover */
-        @media only screen and (max-width: 768px) {
-            .icw-widget,
-            .icw-chatview,
-            iframe[src*="imi.chat"] {
-                max-height: 70vh !important;  /* Only take 70% of viewport height */
-                max-width: 90vw !important;   /* Only take 90% of viewport width */
-                bottom: 60px !important;      /* Slightly lower on mobile */
-            }
-        }
     </style>
 </head>
 <body>
@@ -165,7 +133,6 @@
             <p><strong>Widget Color:</strong> #0F0F0F</p>
             <p><strong>Display Name:</strong> Display Name</p>
             <p><strong>Cookie Consent:</strong> Enabled</p>
-            <p><strong>Position Adjustment:</strong> Raised 60px to avoid favorites button overlap</p>
         </div>
 
         <footer>
