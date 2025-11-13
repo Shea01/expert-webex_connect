@@ -64,10 +64,6 @@
             position: absolute;
             left: 0;
         }
-        .checklist li.checked::before {
-            content: '✓';
-            color: #10b981;
-        }
         footer {
             margin-top: 40px;
             padding-top: 20px;
@@ -87,9 +83,9 @@
             border-color: #10b981;
         }
         .update-notice {
-            background-color: #fef2f2;
-            border: 1px solid #ef4444;
-            color: #991b1b;
+            background-color: #e0f2fe;
+            border: 1px solid #0284c7;
+            color: #075985;
             padding: 10px;
             border-radius: 5px;
             margin: 20px 0;
@@ -97,8 +93,7 @@
         
         /* ============================================
            CHAT WIDGET REPOSITIONING CSS
-           Added to move widget higher to avoid favorites button
-           Position: Line 98-108 in the style section
+           Prevents overlap with favorites button
            ============================================ */
         
         /* Move chat widget higher to avoid favorites button overlap */
@@ -106,9 +101,12 @@
         #divicw iframe,
         iframe[src*="imi.chat"],
         iframe[title*="chat"],
-        iframe[title*="Chat"] {
+        iframe[title*="Chat"],
+        iframe[id*="icw"] {
             bottom: 80px !important;  /* Moved up from default 20px to 80px */
             right: 20px !important;   /* Keeping same horizontal position */
+            position: fixed !important;
+            z-index: 99999 !important;
         }
         
         /* Also adjust the TLS alert frame if it appears */
@@ -116,14 +114,14 @@
             bottom: 72px !important;  /* Adjusted to align with chat widget */
         }
         
-        /* Mobile responsive adjustment - prevent full screen takeover */
+        /* Mobile responsive adjustment */
         @media only screen and (max-width: 768px) {
             .icw-widget,
             .icw-chatview,
             iframe[src*="imi.chat"] {
-                max-height: 70vh !important;  /* Only take 70% of viewport height */
-                max-width: 90vw !important;   /* Only take 90% of viewport width */
-                bottom: 60px !important;      /* Slightly lower on mobile */
+                max-height: 70vh !important;
+                max-width: 90vw !important;
+                bottom: 60px !important;
             }
         }
     </style>
@@ -139,7 +137,7 @@
         </div>
 
         <div class="update-notice">
-            <strong>⚠️ Widget Updated:</strong> New binding ID deployed - E79485B5-298D-4478-B486-3847F26E7F08
+            <strong>🆕 NEW Widget Binding ID:</strong> E79485B5-298D-4478-B486-3847F26E7F08
         </div>
 
         <div class="widget-status" id="widget-status">
@@ -148,86 +146,106 @@
 
         <div class="test-section">
             <h2>📱 Chat Widget Integration</h2>
-            <p>The WebEx Connect/Engage chat widget should appear in the bottom-right corner of this page.</p>
-            <p>If you don't see the chat widget:</p>
+            <p>The WebEx Connect/Engage chat widget should appear in the bottom-right corner of this page (raised 80px to avoid favorites button).</p>
+            <p><strong>Troubleshooting Steps:</strong></p>
             <ol>
                 <li>Check the browser console for errors (F12)</li>
-                <li>Ensure your domain is whitelisted in WebEx Connect</li>
-                <li>Verify the widget binding ID is correct</li>
-                <li>Clear your browser cache and refresh</li>
+                <li>Ensure domain is whitelisted in WebEx Connect for the new binding ID</li>
+                <li>Clear browser cache and cookies, then refresh</li>
+                <li>Try in an incognito/private browsing window</li>
+                <li>Verify CORS settings in WebEx Connect dashboard</li>
             </ol>
         </div>
 
         <div class="test-section">
             <h2>🧪 Testing Checklist</h2>
             <ul class="checklist">
-                <li id="check-1">Chat widget loads correctly</li>
-                <li id="check-2">Chat bubble appears on page</li>
-                <li id="check-3">Chat window opens when clicked</li>
-                <li id="check-4">Messages send and receive properly</li>
-                <li id="check-5">Agent routing works as expected</li>
-                <li id="check-6">Mobile responsive view works</li>
-                <li id="check-7">Widget position avoids favorites button (80px from bottom)</li>
+                <li>Chat widget loads correctly</li>
+                <li>Chat bubble appears on page</li>
+                <li>Chat window opens when clicked</li>
+                <li>Messages send and receive properly</li>
+                <li>Agent routing works as expected</li>
+                <li>Mobile responsive view works</li>
+                <li>Widget positioned 80px from bottom</li>
             </ul>
         </div>
 
         <div class="test-section">
-            <h2>🔧 Widget Configuration</h2>
-            <p><strong>Current Binding ID:</strong> E79485B5-298D-4478-B486-3847F26E7F08</p>
-            <p><strong>Previous Binding ID:</strong> <span style="text-decoration: line-through; color: #6b7280;">9D737EF5-C907-49BC-9E80-8C72DB678FE7</span></p>
-            <p><strong>Position Adjustment:</strong> Raised 80px to avoid favorites button overlap</p>
+            <h2>🔧 Current Widget Configuration</h2>
+            <p><strong>Binding ID:</strong> E79485B5-298D-4478-B486-3847F26E7F08</p>
             <p><strong>Widget Container:</strong> divicw</p>
             <p><strong>Widget Source:</strong> https://media.imi.chat/widget/js/imichatinit.js</p>
+            <p><strong>Position:</strong> Fixed, 80px from bottom, 20px from right</p>
         </div>
 
         <footer>
             <p>WebEx Connect Test Environment | Powered by Render + GitHub</p>
-            <p style="font-size: 12px; color: #9ca3af;">Widget ID: divicw | Last deployment: <span id="deploy-time"></span></p>
+            <p style="font-size: 12px; color: #9ca3af;">Widget ID: divicw | Deployment: <span id="deploy-time"></span></p>
         </footer>
     </div>
 
-    <!-- ============================================
-         UPDATED WebEx Connect/Engage Chat Widget
-         New Binding ID: E79485B5-298D-4478-B486-3847F26E7F08
-         ============================================ -->
+    <!-- WebEx Connect Chat Widget -->
+    <!-- NEW BINDING ID: E79485B5-298D-4478-B486-3847F26E7F08 -->
     <div id="divicw" data-bind="E79485B5-298D-4478-B486-3847F26E7F08" data-org=""></div>
     
     <script>
-        // Display timestamps
+        // Update timestamps
         document.getElementById('update-time').textContent = new Date().toLocaleString();
         document.getElementById('deploy-time').textContent = new Date().toLocaleString();
         
-        // WebEx Widget Initialization Script (Updated)
+        // Debug logging
+        console.log("====================================");
+        console.log("WebEx Chat Widget Initialization");
+        console.log("====================================");
+        console.log("Binding ID: E79485B5-298D-4478-B486-3847F26E7F08");
+        console.log("Container ID: divicw");
+        console.log("====================================");
+        
+        // WebEx Widget Initialization
         var i = {
             t: function(t) {
                 var e = "https://media.imi.chat/widget/js/imichatinit.js";
                 try {
+                    console.log("Attempting to load widget from:", e);
                     var o = new XMLHttpRequest;
                     o.onreadystatechange = function() {
+                        console.log("XMLHttpRequest state:", this.readyState, "status:", this.status);
                         if (this.readyState == 4) {
                             var t = document.getElementById("divicw");
                             if (this.status == 0) {
+                                console.error("Failed to load widget - status 0 (possible CORS issue)");
                                 i.o(t);
+                                document.getElementById('widget-state').textContent = 'Failed to load - Check CORS settings';
                                 return
                             }
-                            var e = document.createElement("script");
-                            e.innerHTML = this.responseText;
-                            t.parentNode.insertBefore(e, t.nextSibling);
-                            
-                            // Update widget status
-                            document.getElementById('widget-state').textContent = 'Active - Ready for testing';
-                            document.getElementById('widget-status').classList.add('active');
-                            console.log("✅ WebEx Widget Successfully Loaded");
+                            if (this.status == 200) {
+                                console.log("Widget script loaded successfully");
+                                var e = document.createElement("script");
+                                e.innerHTML = this.responseText;
+                                t.parentNode.insertBefore(e, t.nextSibling);
+                                
+                                // Update status to success
+                                document.getElementById('widget-state').textContent = 'Active - Widget loaded';
+                                document.getElementById('widget-status').classList.add('active');
+                            } else {
+                                console.error("Failed to load widget - HTTP status:", this.status);
+                                document.getElementById('widget-state').textContent = 'Error: HTTP ' + this.status;
+                            }
                         }
+                    };
+                    o.onerror = function() {
+                        console.error("Network error loading widget");
+                        document.getElementById('widget-state').textContent = 'Network error - Check connection';
                     };
                     o.open("GET", e, true);
                     o.send()
                 } catch (s) {
-                    console.error("❌ WebEx Widget Error:", s);
-                    document.getElementById('widget-state').textContent = 'Error loading widget - Check console';
+                    console.error("Exception loading widget:", s);
+                    document.getElementById('widget-state').textContent = 'Exception: ' + s.message;
                 }
             },
             o: function(t) {
+                // TLS Alert fallback for unsupported browsers
                 t.insertAdjacentHTML("afterend", '<iframe id="tls_al_frm" frameborder="0" style="overflow: hidden;height: 208px;width: 394px;position: fixed;display: block;right: 48px;bottom: 12px;z-index: 99999; display:none;"></iframe>');
                 var e = document.getElementById("tls_al_frm");
                 var o = e.contentWindow || (e.contentDocument.document || e.contentDocument);
@@ -243,21 +261,30 @@
             },
             s: function() {
                 var t = document.getElementById("tls_al_frm");
-                t.remove()
+                if (t) t.remove()
             }
         };
         
         // Initialize the widget
         i.t(function(t) {});
         
-        // Console logging for debugging
-        console.log("====================================");
-        console.log("WebEx Chat Widget Initialization");
-        console.log("====================================");
-        console.log("Widget Binding ID: E79485B5-298D-4478-B486-3847F26E7F08");
-        console.log("Widget Container ID: divicw");
-        console.log("Position: 80px from bottom (adjusted to avoid favorites button)");
-        console.log("====================================");
+        // Check widget container after a short delay
+        setTimeout(function() {
+            var container = document.getElementById("divicw");
+            if (container) {
+                console.log("Widget container found:", container);
+                console.log("Container data-bind:", container.getAttribute("data-bind"));
+                
+                // Check for iframes that might be the widget
+                var iframes = document.querySelectorAll('iframe');
+                console.log("Total iframes on page:", iframes.length);
+                iframes.forEach(function(iframe, index) {
+                    console.log("iframe", index, "src:", iframe.src || "no src");
+                });
+            } else {
+                console.error("Widget container not found!");
+            }
+        }, 3000);
     </script>
 </body>
 </html>
